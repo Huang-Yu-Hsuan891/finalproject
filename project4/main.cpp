@@ -6,6 +6,7 @@
 
 BufferedSerial pc(USBTX,USBRX); //tx,rx
 BufferedSerial uart(D1,D0); //tx,rx
+BufferedSerial xbee(D10, D9);
 
 void linedetection(Arguments *in, Reply *out);
 RPCFunction bLED(&linedetection, "linedetection");
@@ -35,6 +36,7 @@ int main(){
    //FILE *devout = fdopen(&xbee, "w");
    parallax_ping  ping1(pin10);
    led1 = 1;
+   char buffer[200];
    while(1){
     /*if((float)ping1>25) {
         led1 = 1;*/
@@ -45,9 +47,13 @@ int main(){
             buf[i] = *recv;
             if (*recv == '\n') {break;}
       }
-      printf("%s\r\n", buf);
+      //printf("%s\r\n", buf);
+      //xbee.write(buf, sizeof(buf));
       RPC::call(buf, outbuf);
-      printf("%s\r\n", outbuf);
+      sprintf(buffer, " %s \r\n %s \r\n", buf, outbuf);
+      xbee.write(buffer, sizeof(buffer));
+      //xbee.write(outbuf, sizeof(outbuf));
+      //printf("%s\r\n", outbuf);
     /*}
     else {
          led1 = 0;
@@ -63,10 +69,10 @@ void linedetection(Arguments *in, Reply *out){
     int x = in->getArg<int>();
     int y = in->getArg<int>();
     if(x ==1) {
-        car.goStraight(30);
-        ThisThread::sleep_for(500ms);
-        //car.stop();
-        //ThisThread::sleep_for(500ms);
+        car.goStraight(50);
+        ThisThread::sleep_for(800ms);
+        car.stop();
+        ThisThread::sleep_for(200ms);
         out->putData(x);
     }
 }
@@ -79,50 +85,58 @@ void aprildetection(Arguments *in, Reply *out){
     if (mode != 3){
         out->putData(a);
         if (a == 1) {
-                car.turn(40, -0.8);  // turn right
-                ThisThread::sleep_for(500ms);
-                //car.stop();
+                car.turn(50, -0.8);  // turn right
+                ThisThread::sleep_for(800ms);
+                car.stop();
+                ThisThread::sleep_for(200ms);
                 //ThisThread::sleep_for(1s);
         }
         else if (a == 2) {
-                car.turn(30, -0.9);  // turn right
-                ThisThread::sleep_for(500ms);
-                //car.stop();
-                //ThisThread::sleep_for(1s);
+                car.turn(40, -0.9);  // turn right
+                ThisThread::sleep_for(800ms);
+                car.stop();
+                ThisThread::sleep_for(200ms);
             } 
         else if (a == 3) {
                 car.goStraight(20);  
-                ThisThread::sleep_for(500ms);
-                //car.stop();
+                ThisThread::sleep_for(800ms);
+                car.stop();
+                ThisThread::sleep_for(200ms);
                 //ThisThread::sleep_for(1s);
             }
         else if (a == 4) {
                 car.goStraight(20);
-                ThisThread::sleep_for(500ms);
-                //car.stop();
+                ThisThread::sleep_for(800ms);
+                car.stop();
+                ThisThread::sleep_for(200ms);
                 //ThisThread::sleep_for(1s);
         }
         else if (a == 5) {
                 car.goStraight(20);  
-                ThisThread::sleep_for(500ms);
-                //car.stop();
+                ThisThread::sleep_for(800ms);
+                car.stop();
+                ThisThread::sleep_for(200ms);
                 //ThisThread::sleep_for(1s);
         } else if (a == 6) {
-                car.turn(30, 0.9);  // turn left
-                ThisThread::sleep_for(500ms);
-                //car.stop();
+                car.turn(40, 0.9);  // turn left
+                ThisThread::sleep_for(800ms);
+                car.stop();
+                ThisThread::sleep_for(200ms);
                 //ThisThread::sleep_for(1s);
         } else if (a == 7) {
-                car.turn(40, -0.8);  // turn left
-                ThisThread::sleep_for(500ms);
-                //car.stop();
+                car.turn(50, -0.8);  // turn left
+                ThisThread::sleep_for(800ms);
+                car.stop();
+                ThisThread::sleep_for(200ms);
                 //ThisThread::sleep_for(1s);
         } else if (a == 8) {
-                car.stop();
-               ThisThread::sleep_for(500ms);
+               car.stop();
+               ThisThread::sleep_for(800ms);
+               ThisThread::sleep_for(200ms);
         } else if (a == 0) {
                 car.stop();
-                ThisThread::sleep_for(500ms);
+                ThisThread::sleep_for(800ms);
+                ThisThread::sleep_for(200ms);
         }
     }
 }
