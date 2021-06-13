@@ -23,6 +23,7 @@ BBCar car(pin5, pin6, servo_ticker);
 
 DigitalOut led1(LED1);
 DigitalInOut pin10(D11);
+
 int mode;
 
 int main(){
@@ -38,8 +39,8 @@ int main(){
    led1 = 1;
    char buffer[200];
    while(1){
-    /*if((float)ping1>25) {
-        led1 = 1;*/
+    if((float)ping1>10) {
+        led1 = 1;
       led1 = 0;
       for (int i = 0; ; i++){
             char *recv = new char[1];
@@ -54,14 +55,14 @@ int main(){
       xbee.write(buffer, sizeof(buffer));
       //xbee.write(outbuf, sizeof(outbuf));
       //printf("%s\r\n", outbuf);
-    /*}
+    }
     else {
          led1 = 0;
          mode = 3;
          car.stop();
          break;
     }
-    ThisThread::sleep_for(10ms);*/
+    ThisThread::sleep_for(10ms);
    }
 }
 void linedetection(Arguments *in, Reply *out){
