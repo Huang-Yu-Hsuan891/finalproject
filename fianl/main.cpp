@@ -27,15 +27,15 @@ void aprildetection(Arguments *in, Reply *out){
     int a = in->getArg<int>();
     int y1 = in->getArg<int>();
         if (a == 1) {
-            car.turn(40, 0.4);  // turn left
+            car.turn(50, 0.4);  // turn left
             ThisThread::sleep_for(500ms);
             car.stop();
             ThisThread::sleep_for(500ms);
         } else if (a == 2) {
             car.turn(40, -0.4);  // turn right
-            ThisThread::sleep_for(500ms);
+            ThisThread::sleep_for(400ms);
             car.stop();
-            ThisThread::sleep_for(500ms); 
+            ThisThread::sleep_for(600ms); 
         } else if (a == 3) {
             car.goStraight(50);
             ThisThread::sleep_for(600ms);
@@ -54,16 +54,25 @@ int main(){
    char buf[256], outbuf[256];
    led1 = 1;
    char buffer[200];
+   parallax_ping  ping1(pin10);
+   ThisThread::sleep_for(1s);
    while(1){
-      for (int i = 0; ; i++){
+      if((float)ping1>30) {
+          led1 = 1;
+          for (int i = 0; ; i++){
             char *recv = new char[1];
             uart.read(recv, 1);
             buf[i] = *recv;
             if (*recv == '\n') {break;}
-      }
+        }
       RPC::call(buf, outbuf);
       sprintf(buffer, " %s \r\n %s \r\n", buf, outbuf);
       xbee.write(buffer, sizeof(buffer));
+      } else {
+          led1 = 0;
+          car.stop();
+          break;
+      }
    }
 }
 
