@@ -4,7 +4,7 @@
 
 # 主要我是從open mv write 一個rpc function到mbed做指令告訴bbcar接下來做甚麼事情，而xbee 負責看現在呼叫了些甚麼rpc進來到bbcar
 # 因此我會先讓bbcar沿著一條線走，當它沒有偵測到直線10次，就會break掉當下偵測line的狀態，進入到偵測apriltag，當它對著apriltag有超過10次以上的值，也會就會break掉當下偵測line的狀態而停下來，也就完成了整個bbcar的規劃
-# 接著先來介紹main.cpp
+# 接著先來介紹main.cpp，還有在這裡我有加入ping偵測到終點時要停下
      
       for (int i = 0; ; i++){
             char *recv = new char[1];
