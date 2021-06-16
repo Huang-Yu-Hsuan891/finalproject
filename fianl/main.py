@@ -38,8 +38,6 @@ while(True):
                    print_args = (l.x1(),l.y1(),l.x2(),l.y2(),l.length())
                    detectline = (1, mode)
                    detectline1 = 1
-               #else:
-                #   i += 1
    print("%d"% i)
    if detectline1 == 0:
        i += 1
@@ -84,7 +82,7 @@ while(True):
     uart.write(("/aprildetection/run %d %d \r\n" % h).encode())
     print("%d %d" % h)
     time.sleep(1)
-    if j > 10:
+    if j > 15:
         h = (0,3)
         break
 print("%d %d" % h)
