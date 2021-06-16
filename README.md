@@ -108,6 +108,13 @@
       print("%d %d" % h)
       
   # 接著這邊就是針對apriltag的內容 用x方向上的位移量去做判斷，看試向右偏移多少，或是向左偏移多少，也是在最後輸出rpc function到mbed上
+  
+  # 下面這段是xbee讀取資料的內容
+    while True:
+    char = s.read(200)
+    print(char.decode())
+    time.sleep(1)
+   
   # 以上就是我大約的內容
   
 
